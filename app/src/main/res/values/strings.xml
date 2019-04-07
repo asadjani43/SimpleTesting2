@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleTesting</string>
+    <string name="default_web_client_id" translatable="false">24665760358-soekhfg3h8qeuah4u0nmps9tvr2g1s91.apps.googleusercontent.com</string>
+
 </resources>

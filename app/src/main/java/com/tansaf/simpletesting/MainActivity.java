@@ -26,23 +26,25 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GoogleSignInClient mGoogleSignInClient;
     private SignInButton mSigninButton;
-    private int RC_SIGN_IN = 1;
-    private String TAG = "MainActivity";
+    public static final int RC_SIGN_IN = 1;
+    GoogleSignInClient mGoogleSignInClient;
+    public static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mSigninButton = findViewById(R.id.sign_in_button);
         mAuth = FirebaseAuth.getInstance();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
 
         mSigninButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+   
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,13 +94,15 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                           // Intent i = new Intent(MainActivity.this,Second.class);
+                            //startActivity(i);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             Toast.makeText(MainActivity.this,"Login is Failed",Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                           // updateUI(null);
                         }
 
                         // ...
